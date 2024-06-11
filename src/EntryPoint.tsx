@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import {EmployeeGrid} from "./employee/grid/EmployeeGrid.ts";
 import {TaskGrid} from "./task/TaskGrid.ts";
 import {ContractorGrid} from "./contractor/grid/ContractorGrid.ts";
+import {AgreementGrid} from "./agreement/AgreementGrid.ts";
 
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -19,7 +20,7 @@ const ContentLayout = styled.div`
     width: 100%;
 `;
 
-const HOST_NAME = "http://localhost:3000/"
+const HOST_NAME = "http://localhost:3001/"
 
 const items: MenuItem[] = [
     {
@@ -27,6 +28,14 @@ const items: MenuItem[] = [
         label: (
             <Link to={`${HOST_NAME}`}>
                 Главная
+            </Link>
+        ),
+    },
+    {
+        key: 'agreement',
+        label: (
+            <Link to={`${HOST_NAME}agreement`}>
+                Согласования
             </Link>
         ),
     },
@@ -71,6 +80,7 @@ const EntryPointElement = () => {
                   <Route path={"/employee"} element={<EmployeeGrid />} />
                   <Route path={"/task"} element={<TaskGrid />} />
                   <Route path={"/contractor"} element={<ContractorGrid />} />
+                  <Route path={"/agreement"} element={<AgreementGrid />} />
               </Routes>
           </ContentLayout>
       </MainLayout>

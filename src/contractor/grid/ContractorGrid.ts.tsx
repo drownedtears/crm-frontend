@@ -4,7 +4,7 @@ import {Menu, MenuProps, Space, Table, Tag} from 'antd';
 import type { TableProps } from 'antd';
 import styled from "styled-components";
 import {LeftOutlined, PlusCircleOutlined, RightOutlined} from "@ant-design/icons";
-import {ContractorGridVm, ContractorIdName} from "./ContractorGridVm";
+import {Contact, ContractorGridVm, ContractorIdName} from "./ContractorGridVm";
 
 const StyledContactsLayout = styled.div`
 `;
@@ -42,6 +42,12 @@ const ContractorGridElement = () => {
                         dataIndex: 'contractorIdName',
                         key: 'contractorIdName',
                         render: (item: ContractorIdName) => <div onClick={() => vm.onClickContractorGridItem(item.id)}>{item.name}</div>
+                    },
+                    {
+                        title: 'Основной контакт',
+                        dataIndex: 'mainContact',
+                        key: 'mainContact',
+                        render: (item: Contact) => <div>{item.value}</div>
                     },
                 ]}
                 footer={() => <div><PlusCircleOutlined onClick={vm.onClickAddContractor} /></div>}

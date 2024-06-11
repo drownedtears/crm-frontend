@@ -2,6 +2,8 @@ import {action, makeObservable, observable} from "mobx";
 import React, {SyntheticEvent} from "react";
 import {showError} from "../../common/ErrorAlert.ts";
 import {send} from "../../common/Controller";
+import {Contact} from "../grid/ContractorGridVm";
+import {showAddEditContactWindow} from "../grid/contact/AddEditContactWindow.ts";
 
 export const ADD_EDIT_RESPONSE_ERROR_TEXT = "EMPLOYEE_CANT_HAVE_NO_MAIN_POST";
 
@@ -10,13 +12,7 @@ export interface AddEditContractorWindowProps {
     id?: string
     type: string
     name?: string
-}
-
-export interface Contact {
-    id: string,
-    value: string,
-    type: string,
-    main: boolean
+    contactList: Contact[]
 }
 
 export class AddEditContractorWindowVm {
@@ -25,11 +21,12 @@ export class AddEditContractorWindowVm {
     private _name?: string;
     private _type?: string;
     private _isOpen: boolean = true;
-    private _contacts: Contact[] = [];
+    private readonly _contacts: Contact[] = [];
 
     constructor(props: AddEditContractorWindowProps) {
         makeObservable<AddEditContractorWindowVm,
             "_isOpen" |
+            "_contacts" |
             "_name" |
             "_type" |
             "save" |
@@ -37,6 +34,7 @@ export class AddEditContractorWindowVm {
         >
         (this, {
             _name: observable,
+            _contacts: observable,
             _type: observable,
             _isOpen: observable,
             close: action.bound,
@@ -47,6 +45,7 @@ export class AddEditContractorWindowVm {
         this._id = props.id;
         this._name = props.name;
         this._type = props.type;
+        this._contacts = props.contactList;
         this._onSave = props.onSave;
     }
 
@@ -66,6 +65,25 @@ export class AddEditContractorWindowVm {
     public close() {
         this._isOpen = false;
         this._onSave();
+    }
+
+    public get contacts(): Contact[] {
+        return this._contacts;
+    }
+
+    public onClickAddContact() {
+        //todo
+    }
+
+    public onClickContactListItem(item: Contact) {
+        showAddEditContactWindow({
+            contact: item,
+            onSave: this.save
+        })
+    }
+
+    public deleteContact(item: Contact) {
+        //todo
     }
 
     public onChangeName(event: SyntheticEvent) {
